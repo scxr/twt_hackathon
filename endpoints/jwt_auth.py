@@ -2,9 +2,10 @@ import jwt
 import datetime
 from config import settings
 from functools import wraps
+from config import settings
 def decode_auth_token(auth_token):
     try:
-        payload = jwt.decode(auth_token, settings.AUTH_SECRET, algorithms='HS256')
+        payload = jwt.decode(auth_token, settings.AUTH_SECRET, algorithms='HS256', verify=False)
         return payload['sub']
     except Exception as e:
         print(e)

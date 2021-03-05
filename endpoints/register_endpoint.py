@@ -18,7 +18,6 @@ async def register(request:Request, username=Form(...), password=Form(...), pass
     print(isinstance(request, Request))
     if password != password_confirm:
         return templates.TemplateResponse('register.html', {'request':request, 'error':'Invalid Password'})
-    print('else')
     hashed_pword = bcrypt.hashpw(
         password.encode(), bcrypt.gensalt()
     )
@@ -29,5 +28,5 @@ async def register(request:Request, username=Form(...), password=Form(...), pass
         db.add(user_sent)
         db.commit()
     except Exception as e:
-        return {"error":e}
+        return {"error":"user name already in use"}
     return {"ok":"user created"}

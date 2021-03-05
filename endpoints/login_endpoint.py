@@ -12,9 +12,10 @@ templates = Jinja2Templates(directory='templates')
 @router.post('/login')
 async def login(response: Response, username=Form(...), password=Form(...), db = Depends(get_db), Authorise: AuthJWT = Depends()):
     user_vals = db.query(User).filter(User.username == username).first()
+    print(user_vals)
     if user_vals is None:
         return {"error":"username not found"}
-    if bcrypt.checkpw(password.encode, user_vals.hashed_password):
+    if bcrypt.checkpw(password.encode(), user_vals.hashed_pword):
         access_token = Authorise.create_access_token(subject=username)
         Authorise.set_access_cookies(access_token)
         return {"access_token":access_token}

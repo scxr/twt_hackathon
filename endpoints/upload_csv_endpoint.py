@@ -4,8 +4,9 @@ from .jwt_auth import encode_auth_token, jwt_required_wrap, decode_auth_token
 from fastapi_jwt_auth import AuthJWT
 import json
 import os
+import magic
 router = APIRouter()
-
+m = magic.Magic(mime=True)
 templates = Jinja2Templates(directory='templates')
 
 @router.post('/upload_file')
@@ -20,6 +21,12 @@ async def create_upload_file(request: Request, file : UploadFile = File(...)):
     with open(path, 'wb+') as f:
         f.write(file.file.read())
         f.close()
+    
+    file_type = m.from_file(path)
+    if file_type != 'text/plain':
+        return {"error":"This is not a valid csv file."}
+
+
     json_path = os.getcwd() + '\\db\\user_uploads.json'
     
     with open(json_path, 'r') as f:

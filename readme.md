@@ -14,7 +14,7 @@ I have no clue how to do a single piece of frontend o.o *Codepen here I come*
 - [ ] Sanitise CSV input (make sure it isnt a reverse shell etc) - shouldnt matter too much as it is not being directly run
 - [x] Create a login/signup with jwt to be able to tie a user with their files
 - [ ] Check for valid CSV
-- [ ] Tie users to files via JWT
+- [x] Tie users to files via JWT
 - [ ] Implement Basic math functions like mean median and mode
 - [ ] Implement graphs
 - [ ] Send graphs to the frontend

@@ -3,3 +3,4 @@
 *.db
 *.json
 *.csv
+/upload_files

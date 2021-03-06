@@ -17,7 +17,7 @@ from fastapi.staticfiles import StaticFiles
 
 class Settings(BaseModel):
     authjwt_secret_key: str = "thisisasecrettest1234"
-    authjwt_token_location: set = {"cookies","headers"} 
+    authjwt_token_location: set = {"cookies"} 
 
 @AuthJWT.load_config
 def get_config():

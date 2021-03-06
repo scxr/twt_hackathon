@@ -4,11 +4,16 @@ from .jwt_auth import encode_auth_token, jwt_required_wrap, decode_auth_token
 from fastapi_jwt_auth import AuthJWT
 import json
 import os
+from datetime import datetime as dt
 import magic
 router = APIRouter()
 m = magic.Magic(mime=True)
 templates = Jinja2Templates(directory='templates')
-
+class csv:
+    def __init__(self, csv_name, date_uploaded, user_upload_by):
+        self.csv_name =csv_name
+        self.date_uploaded = date_uploaded
+        self.user_upload_by = user_upload_by
 @router.post('/upload_file')
 async def create_upload_file(request: Request, file : UploadFile = File(...)):
     auth_cookie = request.cookies["access_token_cookie"]
@@ -35,7 +40,7 @@ async def create_upload_file(request: Request, file : UploadFile = File(...)):
     print(type(file.filename))
     try:
         users_data = current_data[user]
-        current_data[user].append({"file":file.filename})
+        current_data[user].append({"file":file.filename,"date":str(dt.utcnow())})
     except Exception as e:
         print(e)
         current_data[user] = []

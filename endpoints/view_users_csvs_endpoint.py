@@ -8,6 +8,10 @@ import os
 
 router = APIRouter()
 templates = Jinja2Templates(directory='templates')
+class mycsv:
+    def __init__(self, csv_name, date_uploaded):
+        self.csv_name =csv_name
+        self.date_uploaded = date_uploaded
 
 @router.get('/my_csvs')
 async def view_my_csvs(request: Request, Authorise: AuthJWT = Depends(), db = Depends(get_db)):
@@ -17,10 +21,11 @@ async def view_my_csvs(request: Request, Authorise: AuthJWT = Depends(), db = De
     with open(json_path, 'r') as f:
         csv_json = json.load(f)
         f.close()
-    try:
-        users_csvs = [csv["file"] for csv in csv_json[user]]
-    except Exception as e:
-        print(e)
-        users_csvs = []
     
+    users_csvs = [csv for csv in csv_json[user]]
+    
+            
+    users_csvs = [csv for csv in csv_json[user]]
+    #print([csv for csv in csv_json[user]])   
+    print(users_csvs)
     return templates.TemplateResponse("view_csvs.html", {"request":request, "csvs":users_csvs})

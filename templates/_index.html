@@ -1,0 +1,22 @@
+{% extends "base_template.html" %}
+{% block head %}
+{{super()}}
+{%endblock%}
+{%block navbar %}
+{{super()}}
+{%block page_title%} HomePage! {%endblock%}
+{%block navbartitle%}Navigation{%endblock%}
+<div class="p-1 my-container active-cont">
+    <!-- Top Nav -->
+    <nav class="navbar top-navbar navbar-light bg-light px-5">
+    </nav>
+    <!--End Top Nav -->
+    <h3 class="text-dark p-3" style="text-align: center;">title here
+    </h3>
+    
+    <p class="px-3">hello world</p>
+    
+    </div>
+{%set items=True%}
+{%set contents=["test", "123", "456"]%}
+{% endblock %}

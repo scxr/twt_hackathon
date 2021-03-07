@@ -1,0 +1,19 @@
+{% for csv in csvs%}
+<li class="Accordion__tab" onclick="toggleAccordion(this)">
+  <div class="Accordion__tab__headline">
+      {% if csv["file"]|length > 25%}
+          <h4><a href="/view_csv/{{csv['file_id']}}">{{csv["file"][0:25]}}...csv</a></h4><span class="icon"></span>
+      {%else%}
+          <h4>{{csv["file"]}}</h4><span class="icon"></span>
+      {%endif%}
+     
+  </div>
+  <div class="Accordion__tab__content">
+    <div class="wrapper">
+      <p>Date uploaded : {{csv["date"]}}
+      </p>
+      <button href="/delete_csv/{{csv['file_id']}}" formmethod="POST">Delete</button>
+    </div>
+  </div>
+</li>
+{%endfor%}

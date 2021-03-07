@@ -15,6 +15,7 @@
     </head>
     
     <body>
+      
       <!-- Side-Nav -->
       <div class="side-navbar active-nav d-flex justify-content-between flex-wrap flex-column" id="sidebar">
         <ul class="nav flex-column text-white w-100">
@@ -39,9 +40,10 @@
             <i class="bx bx-user-check"></i>
             <span class="mx-2"><a href="/logout" style="text-decoration: none;color:white;">Logout</a></span>
           </li>
-    
+          
         </ul>
         {%endif%}
+       
         <span href="#" class="nav-link h4 w-100 mb-5">
           
         </span>
@@ -71,25 +73,28 @@
       </script>
       <!-- bootstrap js -->
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
-  
+
     <title>Your CSVs</title>
     <section class="Accordion center">
         <ul class="Accordion__tabs">
           
           </li>
-          {% for csv in csvs%}
+          {% for i in range(csvs| length)%}
           <li class="Accordion__tab" onclick="toggleAccordion(this)">
             <div class="Accordion__tab__headline">
-                {% if csv["file"]|length > 25%}
-                    <h4><a href="/view_csv/{{csv['file_id']}}">{{csv["file"][0:25]}}...csv</a></h4><span class="icon"></span>
+                {% if csvs[i]["file"]|length > 25%}
+                    <h4><a href="/view_csv/{{csvs[i]['file_id']}}">{{csvs[i]["file"][0:25]}}...csv</a></h4><span class="icon"></span>
                 {%else%}
-                    <h4>{{csv["file"]}}</h4><span class="icon"></span>
+                    <h4>{{csvs[i]["file"]}}</h4><span class="icon"></span>
                 {%endif%}
+                <button value="{{csvs[i]['file_id']}}" formmethod="POST" formaction="/delete_csv/{{csvs[i]['file_id']}}">Delete</button>
             </div>
             <div class="Accordion__tab__content">
               <div class="wrapper">
-                <p>Date uploaded : {{csv["date"]}}
+                <p>Date uploaded : {{csvs[i]["date"]}}
                 </p>
+
+                </select>
               </div>
             </div>
           </li>

@@ -4,10 +4,6 @@
 
 Allow user to upload a CSV file, then give them a bunch of statistics or let them edit the dataset such as filling in empty values, maybe let them choose which values are rendered
 
-### Problems
-
-I have no clue how to do a single piece of frontend o.o *Codepen here I come*
-
 ### TODO - Backend
 
 - [x] Allow user to upload CSV
@@ -15,6 +11,8 @@ I have no clue how to do a single piece of frontend o.o *Codepen here I come*
 - [x] Create a login/signup with jwt to be able to tie a user with their files
 - [x] Check for valid CSV
 - [x] Tie users to files via JWT
+- [x] Implement a view_csv function which will work for all uploads
+- [ ] Allow users to delete their csvs
 - [ ] Implement Basic math functions like mean median and mode
 - [ ] Implement graphs
 - [ ] Send graphs to the frontend
@@ -22,4 +20,9 @@ I have no clue how to do a single piece of frontend o.o *Codepen here I come*
 
 
 ### TODO - Frontend
-- [ ] Literally everything :(
+- [-] Create a homepage (done partially)
+- [x] Create a view current CSVs page
+- [x] Create a nice login page
+- [x] Create a nice signup page
+- [ ] Clean up the upload csv page
+- [ ] Making a loading page

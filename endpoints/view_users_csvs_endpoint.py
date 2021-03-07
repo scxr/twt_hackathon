@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, Request
+from fastapi import APIRouter, Depends, Request, Form
 from fastapi.templating import Jinja2Templates
 from fastapi_jwt_auth import AuthJWT
 from db.functions import get_db
@@ -26,6 +26,11 @@ async def view_my_csvs(request: Request, Authorise: AuthJWT = Depends(), db = De
     
             
     users_csvs = [csv for csv in csv_json[user]]
+
     #print([csv for csv in csv_json[user]])   
     print(users_csvs)
-    return templates.TemplateResponse("view_csvs.html", {"request":request, "csvs":users_csvs})
+    return templates.TemplateResponse("view_csvs.html", {"request":request, "csvs":users_csvs, "user":f"Logged in as: {user}"})
+
+@router.post('/delete_csv')
+async def delete_csv(csv_id=Form(...)):
+    return 'lol'

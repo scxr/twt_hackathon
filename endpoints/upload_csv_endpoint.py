@@ -1,9 +1,11 @@
 from fastapi import File, UploadFile, APIRouter, Request, Depends
 from fastapi.templating import Jinja2Templates
+from fastapi.responses import RedirectResponse
 from .jwt_auth import encode_auth_token, jwt_required_wrap, decode_auth_token
 from fastapi_jwt_auth import AuthJWT
 import json
 import os
+import random
 from datetime import datetime as dt
 import magic
 router = APIRouter()
@@ -16,11 +18,12 @@ class csv:
         self.user_upload_by = user_upload_by
 @router.post('/upload_file')
 async def create_upload_file(request: Request, file : UploadFile = File(...)):
+    file_id = random.randint(111111,999999)
     auth_cookie = request.cookies["access_token_cookie"]
     user = decode_auth_token(auth_cookie)
     
     if file.filename.endswith('.csv'):
-        path = os.getcwd() + '\\upload_files\\' + file.filename
+        path = os.getcwd() + '\\upload_files\\' + str(file_id) + '.csv'
     else:
         return {"error":"file extension must be .csv"}
     with open(path, 'wb+') as f:
@@ -31,7 +34,6 @@ async def create_upload_file(request: Request, file : UploadFile = File(...)):
     if file_type != 'text/plain':
         return {"error":"This is not a valid csv file."}
 
-
     json_path = os.getcwd() + '\\db\\user_uploads.json'
     
     with open(json_path, 'r') as f:
@@ -40,16 +42,17 @@ async def create_upload_file(request: Request, file : UploadFile = File(...)):
     print(type(file.filename))
     try:
         users_data = current_data[user]
-        current_data[user].append({"file":file.filename,"date":str(dt.utcnow())})
+        current_data[user].append({"file":file.filename,"date":str(dt.utcnow()), "file_id":file_id})
     except Exception as e:
         print(e)
         current_data[user] = []
-        current_data[user].append({"file":file.filename})
+        current_data[user].append({"file":file.filename, "date":str(dt.utcnow()), "file_id":file_id})
     
     with open(json_path, 'w') as fp:
         print(type(current_data))
         json.dump(current_data, fp)
-    return {"filename":str(file.filename)}
+    return 'to do'
+
 
 @router.get('/upload_file')
 async def get_upload_file(request: Request, Authorise: AuthJWT = Depends()):

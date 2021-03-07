@@ -5,7 +5,8 @@ from endpoints import (hello_world_endpoint,
                        register_endpoint,
                        view_users_csvs_endpoint,
                        index_endpoint,
-                       logout_endpoint)
+                       logout_endpoint,
+                       csv_main_view_endpoint)
 from pydantic import BaseModel                       
 import uvicorn
 from db.base import Base, engine
@@ -39,4 +40,5 @@ app.include_router(register_endpoint.router)
 app.include_router(view_users_csvs_endpoint.router)
 app.include_router(index_endpoint.router)
 app.include_router(logout_endpoint.router)
+app.include_router(csv_main_view_endpoint.router)
 uvicorn.run(app)

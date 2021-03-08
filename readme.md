@@ -12,8 +12,8 @@ Allow user to upload a CSV file, then give them a bunch of statistics or let the
 - [x] Check for valid CSV
 - [x] Tie users to files via JWT
 - [x] Implement a view_csv function which will work for all uploads
-- [ ] Allow users to delete their csvs
-- [ ] Implement Basic math functions like mean median and mode
+- [x] Allow users to delete their csvs
+- [x] Implement Basic math functions like mean median and mode
 - [ ] Implement graphs
 - [ ] Send graphs to the frontend
 - [ ] Allow users to save sessions ? - should be simple with a bit of json, dont want to store all the csvs on my server though - maybe implement a cleanup time

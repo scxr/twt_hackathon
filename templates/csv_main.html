@@ -48,11 +48,11 @@
 
   <!-- Main Wrapper -->
   <div class="p-1 my-container active-cont">
-    
+
         <div class="centered">
-          <div id="mydiv">
-            <div id="mydivheader">Move around</div>
-            <table style="width:100%">
+          <div id="mydiv" class="dt">
+            <div id="mydivheader" class="dth">Move around</div>
+            <table>
               <tr>
                 <th>Column Name</th>
                 <th>Mean</th>
@@ -73,9 +73,8 @@
   
       
       <div class="centered">
-        <div id="mydiv">
-          <div id="mydivheader">Move around</div>
-          
+        <div id="drag" class="dt">
+          <div id="dragheader" class="dth">Move around</div>
           <p style="text-decoration: bold;"><i><b>Row Count : </b></i></p> <p>{{general["row_count"]}}</p>
           <br>
           <p style="text-decoration: italic;"><i><b>Column Count : </b></i></p> <p>{{general["column_count"]}}</p>
@@ -84,6 +83,7 @@
           <br>
           <p style="text-decoration: italic;"><i><b>Duplicates Count : </b></i></p> <p>{{general["duped"]}}</p>
           <br>
+      </div>
       </div>
   </div>
     <!-- Top Nav -->
@@ -98,7 +98,7 @@
 </div>
 <script>
   dragElement(document.getElementById("mydiv"));
-
+  dragElement(document.getElementById("drag"));
 function dragElement(elmnt) {
   var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
   if (document.getElementById(elmnt.id + "header")) {

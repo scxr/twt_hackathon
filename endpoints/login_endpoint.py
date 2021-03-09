@@ -1,10 +1,10 @@
-from fastapi import APIRouter, Response, Form, Depends, Request
+from fastapi import APIRouter, Response, Form, Depends, Request, status
 from fastapi.templating import Jinja2Templates
 from .jwt_auth import encode_auth_token, jwt_required_wrap
 from db.functions import get_db
 from models.database_models import User
 from fastapi_jwt_auth import AuthJWT
-
+from fastapi.responses import RedirectResponse
 import bcrypt
 
 router = APIRouter()
@@ -18,7 +18,9 @@ async def login(response: Response, username=Form(...), password=Form(...), db =
     if bcrypt.checkpw(password.encode(), user_vals.hashed_pword):
         access_token = Authorise.create_access_token(subject=username)
         Authorise.set_access_cookies(access_token)
-        return {"access_token":access_token}
+        rr = RedirectResponse('/my_csvs',status_code=status.HTTP_303_SEE_OTHER)
+        rr.set_cookie("access_token_cookie", access_token)
+        return rr
     else:
         return 'Incorrect password'
 

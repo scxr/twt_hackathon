@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Homepage</title>
+  <!-- bootstrap 5 css -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous" />
+  <!-- BOX ICONS CSS-->
+  <link href="https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css" rel="stylesheet" />
+  <!-- custom css -->
+  <link rel="stylesheet" href="{{ url_for('static', path='/style.css') }}">
+</head>
+
+<body>
+  <!-- Side-Nav -->
+  <div class="side-navbar active-nav d-flex justify-content-between flex-wrap flex-column" id="sidebar">
+    <ul class="nav flex-column text-white w-100">
+      <a href="#" class="nav-link h3 text-white my-2">
+        <p>{{user}}</p>
+      </a>
+      {% if user=="Not logged in" %}
+      <li href="#" class="nav-link">
+        <i class="bx bxs-dashboard"></i>
+        <span class="mx-2"><a href="#" style="text-decoration: none;color:white;">Home</a></span>
+      </li>
+      <li href="/login" class="nav-link">
+        <i class="bx bx-user-check"></i>
+        <span class="mx-2"><a href="/login" style="text-decoration: none;color:white;">Login</a></span>
+      </li>
+      <li href="#" class="nav-link">
+        <i class="bx bx-user-check"></i>
+        <span class="mx-2"><a href="/register" style="text-decoration: none;color:white;">Register</a></span>
+      </li>
+      {%else%}
+      <li href="#" class="nav-link">
+        <i class="bx bx-user-check"></i>
+        <span class="mx-2"><a href="/logout" style="text-decoration: none;color:white;">Logout</a></span>
+      </li>
+
+    </ul>
+    {%endif%}
+    <span href="#" class="nav-link h4 w-100 mb-5">
+      
+    </span>
+  </div>
+
+  <!-- Main Wrapper -->
+  <div class="p-1 my-container active-cont">
+    
+        <div class="centered">
+          <div id="mydiv">
+            <div id="mydivheader">Move around</div>
+            <table style="width:100%">
+              <tr>
+                <th>Column Name</th>
+                <th>Mean</th>
+                <th>Median</th>
+                <th>Mode</th>
+              </tr>
+              {% for i in vals %}
+                  <tr>
+                    <th>{{i}}</th>
+                    <th>{{vals[i]["mean"]}}</th>
+                    <th>{{vals[i]["median"]}}</th>
+                    <th>{{vals[i]["mode"]}}</th>
+                  </tr>
+              {% endfor %}
+            </table>
+            </div>
+        </div>
+  
+      
+      <div class="centered">
+        <div id="mydiv">
+          <div id="mydivheader">Move around</div>
+          
+          <p style="text-decoration: bold;"><i><b>Row Count : </b></i></p> <p>{{general["row_count"]}}</p>
+          <br>
+          <p style="text-decoration: italic;"><i><b>Column Count : </b></i></p> <p>{{general["column_count"]}}</p>
+          <br>
+          <p style="text-decoration: italic;"><i><b>NA Values Count :</b></i> </p> <p>{{general["na_vals"]}}</p>
+          <br>
+          <p style="text-decoration: italic;"><i><b>Duplicates Count : </b></i></p> <p>{{general["duped"]}}</p>
+          <br>
+      </div>
+  </div>
+    <!-- Top Nav -->
+    <nav class="navbar top-navbar navbar-light bg-light px-5">
+      <a class="btn border-0" id="menu-btn"><i class="bx bx-menu"></i></a>
+    </nav>
+    <!--End Top Nav -->
+    
+    <h3 class="text-dark p-3" style="text-align: center; font-style:italic;position:relative;">View CSV
+    </h3>
+    
+</div>
+<script>
+  dragElement(document.getElementById("mydiv"));
+
+function dragElement(elmnt) {
+  var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+  if (document.getElementById(elmnt.id + "header")) {
+    // if present, the header is where you move the DIV from:
+    document.getElementById(elmnt.id + "header").onmousedown = dragMouseDown;
+  } else {
+    // otherwise, move the DIV from anywhere inside the DIV:
+    elmnt.onmousedown = dragMouseDown;
+  }
+
+  function dragMouseDown(e) {
+    e = e || window.event;
+    e.preventDefault();
+    // get the mouse cursor position at startup:
+    pos3 = e.clientX;
+    pos4 = e.clientY;
+    document.onmouseup = closeDragElement;
+    // call a function whenever the cursor moves:
+    document.onmousemove = elementDrag;
+  }
+
+  function elementDrag(e) {
+    e = e || window.event;
+    e.preventDefault();
+    // calculate the new cursor position:
+    pos1 = pos3 - e.clientX;
+    pos2 = pos4 - e.clientY;
+    pos3 = e.clientX;
+    pos4 = e.clientY;
+    // set the element's new position:
+    elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+    elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+  }
+
+  function closeDragElement() {
+    // stop moving when mouse button is released:
+    document.onmouseup = null;
+    document.onmousemove = null;
+  }
+}
+</script>  
+<script id="rendered-js">
+    var menu_btn = document.querySelector("#menu-btn");
+    var sidebar = document.querySelector("#sidebar");
+    var container = document.querySelector(".my-container");
+    menu_btn.addEventListener("click", () => {
+      sidebar.classList.toggle("active-nav");
+      container.classList.toggle("active-cont");
+    });
+    
+  </script>
+
+  <!-- bootstrap js -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+</body>
+
+</html>

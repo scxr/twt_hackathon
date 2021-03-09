@@ -1,9 +1,13 @@
 import pandas as pd
+import numpy as np
 from pandas.core.frame import DataFrame
 
 async def pandas_clean_df_col(df: pd.DataFrame, column):
-    df[column] = df[column].str.extract('(\d+)', expand=False)    
-    df[column] = df[column].apply(lambda x: float(x))
+    try:
+        df[column] = df[column].str.extract('(\d+)', expand=False)    
+        df[column] = df[column].apply(lambda x: float(x))
+    except:
+        pass
     return df
 
 async def pandas_get_column_names(df:pd.DataFrame) -> list:
@@ -32,3 +36,16 @@ async def pandas_get_min(df:pd.DataFrame, column:str) -> int:
     min_pos = clean_df[column].argmin()
     min_val = clean_df[column].loc(min_pos)
     return min_pos, min_val
+
+async def pandas_np_general_information(df:pd.DataFrame) -> list:
+    row_count, column_count = df.shape[0], df.shape[1]
+    #column_names = df.columns
+    na_vals = np.count_nonzero(df.isna())
+    duplicates = np.count_nonzero(df.duplicated())
+    ret_dict = {
+        "row_count":row_count,
+        "column_count":column_count,
+        "na_vals": na_vals,
+        "duped": duplicates
+    }
+    return ret_dict

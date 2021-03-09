@@ -10,7 +10,7 @@
   }
   
   .side-navbar {
-    width: 250px;
+    width: 13%;
     height: 100%;
     position: fixed;
     margin-left: -300px;
@@ -80,4 +80,65 @@ btn {
   cursor: pointer;
   border-radius: 5px;
   text-align: center;
+}
+
+.split {
+  height:80%;
+  width:40%;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  overflow-x: hidden;
+  padding-top:20%;
+  padding-right: 20%;
+}
+
+.left {
+  left: 15%;
+}
+
+.right {
+  right: 15%;
+}
+.centered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+/* Style the image inside the centered container, if needed */
+.centered img {
+  width: 150px;
+  border-radius: 50%;
+}
+
+.italic_text {
+  text-decoration: italic;
+  
+}
+
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 15px;
+}
+#mydiv {
+  position: absolute;
+  z-index: 9;
+  background-color: #f1f1f1;
+  border: 1px solid #d3d3d3;
+  text-align: center;
+}
+
+#mydivheader {
+  padding: 10px;
+  cursor: move;
+  z-index: 10;
+  background-color: #2196F3;
+  color: #fff;
 }

@@ -13,7 +13,7 @@ from db.base import Base, engine
 from config import jwt_settings
 from fastapi_jwt_auth.exceptions import AuthJWTException
 from fastapi_jwt_auth import AuthJWT
-from fastapi.responses import JSONResponse
+from fastapi.responses import RedirectResponse
 from fastapi.staticfiles import StaticFiles
 
 class Settings(BaseModel):
@@ -29,10 +29,7 @@ app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")
 @app.exception_handler(AuthJWTException)
 def authjwt_exception_handler(request:Request, exc: AuthJWTException):
-    return JSONResponse(
-        status_code=exc.status_code,
-        content={"detail":exc.message}
-    )
+    return RedirectResponse('/login')
 app.include_router(hello_world_endpoint.router)
 app.include_router(upload_csv_endpoint.router)
 app.include_router(login_endpoint.router)

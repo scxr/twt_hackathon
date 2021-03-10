@@ -24,5 +24,7 @@ Allow user to upload a CSV file, then give them a bunch of statistics or let the
 - [x] Create a view current CSVs page
 - [x] Create a nice login page
 - [x] Create a nice signup page
+- [x] Make the view csv page sexy
+- [ ] Create the ability to add graphs
 - [ ] Clean up the upload csv page
 - [ ] Making a loading page

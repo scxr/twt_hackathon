@@ -56,7 +56,4 @@ async def view_csv(csv_id:int,request:Request,args='', columns='',Authorise : Au
     print(dict(vals)["Year"]["mean"])
     for i in vals:
         print(vals[i]["mean"])
-    return templates.TemplateResponse('csv_main.html', {"request":request, 
-                                                        "csv_cols":csv_cols, 
-                                                        "general":csv_info, 
-                                                        "vals":dict(vals)})
+    return templates.TemplateResponse('csv_main.html', {"request":request, "csv_cols":csv_cols, "general":csv_info, "vals":dict(vals)})

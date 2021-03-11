@@ -21,14 +21,14 @@ async def create_upload_file(request: Request, file : UploadFile = File(...)):
     user = decode_auth_token(auth_cookie)
     
     if file.filename.endswith('.csv'):
-        path = '\\upload_files\\' + str(file_id) + '.csv'
+        path = 'upload_files/' + str(file_id) + '.csv'
     else:
         return {"error":"file extension must be .csv"}
     with open(path, 'wb+') as f:
         f.write(file.file.read())
         f.close()
 
-    json_path = '\\db\\user_uploads.json'
+    json_path = 'db/user_uploads.json'
     
     with open(json_path, 'r') as f:
         current_data = json.loads(f.read())

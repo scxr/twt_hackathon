@@ -1,1 +1,2 @@
-web: uvicorn main:app --bind 0.0.0.0:${PORT} --preload
+web: uvicorn main:app --host=0.0.0.0 --port=${PORT:-5000}
+

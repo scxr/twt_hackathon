@@ -14,10 +14,10 @@ Allow user to upload a CSV file, then give them a bunch of statistics or let the
 - [x] Implement a view_csv function which will work for all uploads
 - [x] Allow users to delete their csvs
 - [x] Implement Basic math functions like mean median and mode
-- [ ] Implement graphs
-- [ ] Send graphs to the frontend
-- [ ] Allow users to save sessions ? - should be simple with a bit of json, dont want to store all the csvs on my server though - maybe implement a cleanup time
-
+- [x] Implement graphs
+- [x] Send graphs to the frontend
+- [x] Allow users to save sessions ? - should be simple with a bit of json, dont want to store all the csvs on my server though - maybe implement a cleanup time
+- [ ] Add more graph functions
 
 ### TODO - Frontend
 - [-] Create a homepage (done partially)

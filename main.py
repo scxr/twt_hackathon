@@ -1,3 +1,4 @@
+from logging import debug
 from fastapi import FastAPI, Request
 from starlette.responses import RedirectResponse
 from endpoints import (hello_world_endpoint,
@@ -10,6 +11,7 @@ from endpoints import (hello_world_endpoint,
                        csv_main_view_endpoint)
 from pydantic import BaseModel                       
 import uvicorn
+import os
 from db.base import Base, engine
 from config import jwt_settings
 from fastapi_jwt_auth.exceptions import AuthJWTException
@@ -18,7 +20,7 @@ from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles
 
 class Settings(BaseModel):
-    authjwt_secret_key: str = "thisisasecrettest1234"
+    authjwt_secret_key: str = os.environ.get('JWT_SECRET')
     authjwt_token_location: set = {"cookies"} 
 
 @AuthJWT.load_config
@@ -41,4 +43,5 @@ app.include_router(view_users_csvs_endpoint.router)
 app.include_router(index_endpoint.router)
 app.include_router(logout_endpoint.router)
 app.include_router(csv_main_view_endpoint.router)
-uvicorn.run(app)
+port = int(os.environ.get('PORT', 5000))
+uvicorn.run(app, host="0.0.0.0", port=port, debug=False)

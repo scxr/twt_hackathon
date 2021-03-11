@@ -1,8 +1,8 @@
 from pydantic import BaseModel, BaseSettings, BaseConfig
 import os
 class settings(BaseConfig):
-    AUTH_SECRET = 'jwt_token'
-    auth_jwt_secret_key = 'thisisasecrettest1234'
+    AUTH_SECRET = os.urandom(16)
+    auth_jwt_secret_key = os.environ.get('JWT_SECRET')
     DATABASE_URI = 'sqlite:///main.db'
 
 class jwt_settings(BaseModel):

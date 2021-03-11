@@ -3,6 +3,5 @@
 *.db
 *.json
 *.csv
-/upload_files
 **/.vscode
 **/venv

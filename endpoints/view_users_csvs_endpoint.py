@@ -16,7 +16,7 @@ templates = Jinja2Templates(directory='templates')
 async def view_my_csvs(request: Request, Authorise: AuthJWT = Depends(), db = Depends(get_db)):
     Authorise.jwt_required()
     user = Authorise.get_jwt_subject()
-    json_path = os.getcwd() + '\\db\\user_uploads.json'
+    json_path = 'db/user_uploads.json'
     with open(json_path, 'r') as f:
         csv_json = json.load(f)
         f.close()
@@ -38,10 +38,9 @@ async def delete_csv(csv_id:int, request: Request):
     else:
         user_logged_in = decode_auth_token(user_cookie)
     print()
-    file_path = os.getcwd()+ '\\upload_files\\' + str(csv_id)+'.csv'
-    print(file_path, os.getcwd(), csv_id)
+    file_path = r'upload_files/' + str(csv_id)+'.csv'
     os.remove(file_path)
-    json_path = os.getcwd() + '\\db\\user_uploads.json'
+    json_path = r'db/user_uploads.json'
     with open(json_path) as f:
         users_json = json.load(f)
     #users_json = json.load(json_path)

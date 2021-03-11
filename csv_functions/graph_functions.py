@@ -25,16 +25,16 @@ async def scatter_plot(df, col1, col2, csv_id):
     plt.ylabel(col2)
     print(os.getcwd())
     try:
-        os.mkdir(os.getcwd() + f"\\graphs\\{str(csv_id)}")
+        os.mkdir(fr"graphs/{str(csv_id)}")
     except FileExistsError:
         pass
-    to_save = os.getcwd() + '\\graphs\\' + str(csv_id) + f"\scatter_{col1}_{col2}" + '.png'
+    to_save =r'graphs/' + str(csv_id) + fr"/scatter_{col1}_{col2}" + '.png'
     plt.savefig(to_save)
     return to_save
 
 async def histo_plot(df, col1, col2, csv_id):
     try:
-        os.mkdir(os.getcwd() + f"\\graphs\\{str(csv_id)}")
+        os.mkdir(fr"graphs/{str(csv_id)}")
     except FileExistsError:
         pass
     new_df = await pandas_clean_df_col(df, col1)
@@ -45,6 +45,6 @@ async def histo_plot(df, col1, col2, csv_id):
         col1: x,
         col2:y
     }), bins=20, alpha=0.2, kde=True)
-    to_save = os.getcwd() + '\\graphs\\' + str(csv_id) + f"\hist_{col1}_{col2}" + '.png'
+    to_save = r'graphs/' + str(csv_id) + fr"/hist_{col1}_{col2}" + '.png'
     plt.savefig(to_save)
     return to_save

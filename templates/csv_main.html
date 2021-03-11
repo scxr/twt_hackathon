@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Homepage</title>
+  <title>CSV Graphs!</title>
   <!--JQuery-->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <!-- bootstrap 5 css -->
@@ -38,11 +38,15 @@
       </li>
       {%else%}
       <li href="#" class="nav-link">
+        <i class="bx bxs-dashboard"></i>
+        <span class="mx-2"><a href="/" style="text-decoration: none;color:white;">Home</a></span>
+      </li>
+      <li href="#" class="nav-link">
         <i class="bx bx-user-check"></i>
         <span class="mx-2"><a href="/logout" style="text-decoration: none;color:white;">Logout</a></span>
       </li>
       <li href="#" class="nav-link">
-        <i class ="bx bx-user-check"></i>
+        <i class ="bx bxs-dashboard"></i>
         <span class="mx-2"><a href="/add_graph/{{csv_id}}" style="text-decoration: none;color:white;">Add a graph!</a></span>
     </li>
     <li href="#" class="nav-link">

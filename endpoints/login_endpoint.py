@@ -1,6 +1,5 @@
 from fastapi import APIRouter, Response, Form, Depends, Request, status
 from fastapi.templating import Jinja2Templates
-from .jwt_auth import encode_auth_token, jwt_required_wrap
 from db.functions import get_db
 from models.database_models import User
 from fastapi_jwt_auth import AuthJWT

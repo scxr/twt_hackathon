@@ -1,7 +1,7 @@
 from fastapi import File, UploadFile, APIRouter, Request, Depends
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import RedirectResponse
-from .jwt_auth import encode_auth_token, jwt_required_wrap, decode_auth_token
+from endpoints.jwt_auth import encode_auth_token, jwt_required_wrap, decode_auth_token
 from fastapi_jwt_auth import AuthJWT
 import json
 import os

@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Request, Depends
 from fastapi.templating import Jinja2Templates
 from fastapi_jwt_auth import AuthJWT
-from .jwt_auth import decode_auth_token
+from endpoints.jwt_auth import decode_auth_token
 router = APIRouter()
 
 templates = Jinja2Templates(directory='templates')

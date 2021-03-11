@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, Request
-from .jwt_auth import decode_auth_token
+from endpoints.jwt_auth import decode_auth_token
 from fastapi.responses import RedirectResponse
 from fastapi.templating import Jinja2Templates
 from fastapi_jwt_auth import AuthJWT

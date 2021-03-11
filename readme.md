@@ -24,5 +24,5 @@ Allow user to upload a CSV file, then give them a bunch of statistics or let the
 - [x] Create a view current CSVs page
 - [x] Create a nice login page
 - [x] Create a nice signup page
-- [ ] Clean up the upload csv page
-- [ ] Making a loading page
+- [x] Clean up the upload csv page
+- [x] Making a loading page - not needed, my code is fast af

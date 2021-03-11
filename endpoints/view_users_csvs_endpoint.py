@@ -20,14 +20,14 @@ async def view_my_csvs(request: Request, Authorise: AuthJWT = Depends(), db = De
     with open(json_path, 'r') as f:
         csv_json = json.load(f)
         f.close()
-    
-    users_csvs = [csv for csv in csv_json[user]]
-    
+    try:
+        users_csvs = [csv for csv in csv_json[user]]
+    except:
+        users_csvs = []
             
     #users_csvs = [csv for csv in csv_json[user]]
 
     #print([csv for csv in csv_json[user]])   
-    print(users_csvs)
     return templates.TemplateResponse("view_csvs.html", {"request":request, "csvs":users_csvs, "user":f"Logged in as: {user}"})
 
 @router.get('/delete_csv/{csv_id}')
@@ -45,6 +45,7 @@ async def delete_csv(csv_id:int, request: Request):
     with open(json_path) as f:
         users_json = json.load(f)
     #users_json = json.load(json_path)
+    
     for val in range(len(users_json[user_logged_in])):
         if users_json[user_logged_in][val]["file_id"] == csv_id:
             del users_json[user_logged_in][val]

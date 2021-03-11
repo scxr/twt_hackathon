@@ -49,7 +49,10 @@
       <i class="bx bxs-dashboard"></i>
       <span class="mx-2"><a href="/upload_csv" style="text-decoration: none;color:white;">Upload a CSV</a></span>
     </li>
-
+    <li href="#" class="nav-link">
+      <i class="bx bxs-dashboard"></i>
+      <span class="mx-2"><a href="/my_csvs" style="text-decoration: none;color:white;">My CSVs</a></span>
+    </li>
   </ul>
     {%endif%}
 
@@ -91,7 +94,7 @@
   <div class="center">
   
     <div id="out{{i}}" class="dt">
-  <div id="out{{i}}header" class="dth">Move <a href="/remove_graph/{{images[i]}}">Remove Graph</a> <form method="POST" action="/remove_graph/{{images[i]}}"><button type="submit">Delete</button></form></div>
+  <div id="out{{i}}header" class="dth">Move <a href="/remove_graph/{{images[i]}}">Remove Graph</a></div>
     <div class="image">
     <img src="/graphs/{{images[i]}}" alt="bruh moment">
   </div>

@@ -86,6 +86,9 @@
         <ul class="Accordion__tabs">
           
           </li>
+          {%if csvs| length == 0%}
+          <h1 style="text-align:center;">You have no CSVs currently!</h1>
+          {%endif%}
           {% for i in range(csvs| length)%}
           <li class="Accordion__tab" onclick="toggleAccordion(this)">
             <div class="Accordion__tab__headline">

@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Request, Depends, Form
 from fastapi.templating import Jinja2Templates
+from starlette.responses import RedirectResponse
 from db.base import SessionLocal, engine
 from sqlalchemy.orm import Session
 from db.functions import get_db
@@ -28,5 +29,5 @@ async def register(request:Request, username=Form(...), password=Form(...), pass
         db.add(user_sent)
         db.commit()
     except Exception as e:
-        return {"error":"user name already in use"}
-    return {"ok":"user created"}
+        return templates.TemplateResponse('register.html', {'request':request, "error":"Username taken"})
+    return RedirectResponse('/login', status_code=303)

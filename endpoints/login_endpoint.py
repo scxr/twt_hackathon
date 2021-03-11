@@ -10,11 +10,11 @@ import bcrypt
 router = APIRouter()
 templates = Jinja2Templates(directory='templates')
 @router.post('/login')
-async def login(response: Response, username=Form(...), password=Form(...), db = Depends(get_db), Authorise: AuthJWT = Depends()):
+async def login(response: Response, request:Request,username=Form(...), password=Form(...), db = Depends(get_db), Authorise: AuthJWT = Depends()):
     user_vals = db.query(User).filter(User.username == username).first()
     print(user_vals)
     if user_vals is None:
-        return {"error":"username not found"}
+        return templates.TemplateResponse('login.html', {"request":request, "error":"username not found"})
     if bcrypt.checkpw(password.encode(), user_vals.hashed_pword):
         access_token = Authorise.create_access_token(subject=username)
         Authorise.set_access_cookies(access_token)
@@ -22,7 +22,7 @@ async def login(response: Response, username=Form(...), password=Form(...), db =
         rr.set_cookie("access_token_cookie", access_token)
         return rr
     else:
-        return 'Incorrect password'
+        return templates.TemplateResponse('login.html', {"request":request, "error":"Incorrect password"})
 
 @router.get('/login')
 async def login_get(request: Request):

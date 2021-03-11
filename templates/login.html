@@ -48,8 +48,12 @@
         <br><br>
         <input type='password' name='password' placeholder='Password' required>
         <br><br>
-        <input type='submit' value="login" required>
+        <input type='submit' value="login">
+        {% if error %}
+        <p style="text-align:center; color:red;">{{error}}</p>
+        {% endif %}
     </form>
+    
     <!-- Top Nav -->
     <nav class="navbar top-navbar navbar-light bg-light px-5">
       <a class="btn border-0" id="menu-btn"><i class="bx bx-menu"></i></a>
@@ -58,6 +62,7 @@
     
     <h3 class="text-dark p-3" style="text-align: center; font-style:italic;position:relative;">Login
     </h3>
+    
     
 </div>
   <script id="rendered-js">

@@ -23,11 +23,11 @@ async def view_csv(csv_id:int,request:Request,colo='', colt='',graph_type='',Aut
     Authorise.jwt_required()
     user = Authorise.get_jwt_subject()
     user_to_send = f'Logged in as: {user}'
-    path = os.getcwd() + '\\db\\user_uploads.json'
+    path =r'db/user_uploads.json'
     with open(path) as f:
         users_json = json.load(f)
     users_csvs = users_json[user]
-    csv_path = os.getcwd() + '\\upload_files\\' + str(csv_id) + '.csv'
+    csv_path = r'upload_files/' + str(csv_id) + '.csv'
     df = pd.read_csv(csv_path)
     csv_cols = df.columns
     #val = await pandas_get_column_mean(df, "Industry_name_NZSIOC")
@@ -47,8 +47,8 @@ async def view_csv(csv_id:int,request:Request,colo='', colt='',graph_type='',Aut
     resp = await parse_request(df, graph_type, colo, colt, csv_id)
     images = []
     try:
-        for i in os.listdir(f'graphs\\{csv_id}'):
-            images.append(str(csv_id)+'\\'+i)
+        for i in os.listdir(fr'graphs/{csv_id}'):
+            images.append(str(csv_id)+r'/'+i)
     except:
         images = []
     return templates.TemplateResponse('csv_main.html', {"request":request, 
@@ -65,7 +65,7 @@ async def add_graph_post(csv_id:int, graphtype=Form(...), col1=Form(...), col2=F
 
 @router.get('/add_graph/{csv_id}')
 async def add_graph(request: Request, csv_id:int):
-    csv_path = os.getcwd() + '\\upload_files\\' + str(csv_id) + '.csv'
+    csv_path = r'upload_files/' + str(csv_id) + '.csv'
     df = pd.read_csv(csv_path)
     plottable_columns = await pandas_get_possible_numerics(df)
     return templates.TemplateResponse('add_graph.html', {"request":request, "columns":plottable_columns})

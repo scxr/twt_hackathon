@@ -10,10 +10,7 @@ import os
 
 router = APIRouter()
 templates = Jinja2Templates(directory='templates')
-class mycsv:
-    def __init__(self, csv_name, date_uploaded):
-        self.csv_name =csv_name
-        self.date_uploaded = date_uploaded
+
 
 @router.get('/my_csvs')
 async def view_my_csvs(request: Request, Authorise: AuthJWT = Depends(), db = Depends(get_db)):

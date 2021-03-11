@@ -1,9 +1,10 @@
-from fastapi import APIRouter, Request, Depends
+from fastapi import APIRouter, Request, Depends, Form
 from fastapi_jwt_auth import AuthJWT
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import RedirectResponse
 from csv_functions.csv_functions_pandas import * 
 from collections import defaultdict
+from csv_functions.graph_functions import parse_request
 import json
 import os
 import pandas as pd
@@ -18,21 +19,8 @@ async def reroute_select_csv(request: Request):
         return RedirectResponse('/login')
 
 @router.get('/view_csv/{csv_id}')
-async def view_csv(csv_id:int,request:Request,args='', columns='',Authorise : AuthJWT = Depends()):
+async def view_csv(csv_id:int,request:Request,colo='', colt='',graph_type='',Authorise : AuthJWT = Depends()):
     Authorise.jwt_required()
-    to_zip = False
-    if ',' in args:
-        to_zip = True
-        args = args.split(',')
-    if ',' in columns:
-        to_zip = True
-        columns = columns.split(',')
-    
-    print(args, columns)
-    if to_zip:
-        args_and_cols = zip(args, columns)
-    else:
-        args_and_cols = zip([args], [columns])
     user = Authorise.get_jwt_subject()
     path = os.getcwd() + '\\db\\user_uploads.json'
     with open(path) as f:
@@ -52,8 +40,26 @@ async def view_csv(csv_id:int,request:Request,args='', columns='',Authorise : Au
             vals[column]["mean"] = "%.2f" % column_mean
             vals[column]["median"] = "%.2f" % column_median
             vals[column]["mode"] = column_mode[0]
-    print(dict(vals))
-    print(dict(vals)["Year"]["mean"])
-    for i in vals:
-        print(vals[i]["mean"])
-    return templates.TemplateResponse('csv_main.html', {"request":request, "csv_cols":csv_cols, "general":csv_info, "vals":dict(vals)})
+    resp = await parse_request(df, graph_type, colo, colt, csv_id)
+    images = []
+    
+    for i in os.listdir(f'graphs\\{csv_id}'):
+        images.append(str(csv_id)+'\\'+i)
+    print(images)
+    return templates.TemplateResponse('csv_main.html', {"request":request, 
+                                                        "csv_cols":csv_cols, 
+                                                        "general":csv_info, 
+                                                        "vals":dict(vals),
+                                                        "csv_id":csv_id,
+                                                        "images":images})
+
+@router.post('/add_graph/{csv_id}')
+async def add_graph_post(csv_id:int, graphtype=Form(...), col1=Form(...), col2=Form(...)):
+    return RedirectResponse(f'/view_csv/{csv_id}?colo={col1}&colt={col2}&graph_type={graphtype}', status_code=303)
+
+@router.get('/add_graph/{csv_id}')
+async def add_graph(request: Request, csv_id:int):
+    csv_path = os.getcwd() + '\\upload_files\\' + str(csv_id) + '.csv'
+    df = pd.read_csv(csv_path)
+    plottable_columns = await pandas_get_possible_numerics(df)
+    return templates.TemplateResponse('add_graph.html', {"request":request, "columns":plottable_columns})

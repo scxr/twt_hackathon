@@ -1,5 +1,7 @@
 import pandas as pd
 import numpy as np
+#import asyncio
+#import os
 from pandas.core.frame import DataFrame
 
 async def pandas_clean_df_col(df: pd.DataFrame, column):
@@ -49,3 +51,15 @@ async def pandas_np_general_information(df:pd.DataFrame) -> list:
         "duped": duplicates
     }
     return ret_dict
+
+async def pandas_get_possible_numerics(df: pd.DataFrame) -> list:
+    possibles = []
+    for col in df.columns:
+        cleaned = await pandas_clean_df_col(df, col)
+        if str(cleaned[col].mean()) != "nan":
+            possibles.append(col)
+            #print(str(cleaned[col].mean()))    
+        #print(cleaned[col].mean())
+    return possibles
+
+#print(os.getcwd())

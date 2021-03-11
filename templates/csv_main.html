@@ -5,6 +5,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Homepage</title>
+  <!--JQuery-->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <!-- bootstrap 5 css -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous" />
   <!-- BOX ICONS CSS-->
@@ -41,6 +43,10 @@
 
     </ul>
     {%endif%}
+    <li href="/add_graph/{{csv_id}}" class="nav-link">
+      <i class ="bx bx-user-check"></i>
+      <span class="mx-2"><a href="/add_graph/{{csv_id}}">tst</a></span>
+  </li>
     <span href="#" class="nav-link h4 w-100 mb-5">
       
     </span>
@@ -48,8 +54,9 @@
 
   <!-- Main Wrapper -->
   <div class="p-1 my-container active-cont">
-
+    
         <div class="centered">
+          
           <div id="mydiv" class="dt">
             <div id="mydivheader" class="dth">Move around</div>
             <table>
@@ -69,7 +76,20 @@
               {% endfor %}
             </table>
             </div>
-        </div>
+  </div>
+  {% for i in range(images|length) %}
+  <div class="center">
+  <div id="out{{i}}" class="dt">
+  <div id="out{{i}}header" class="dth">Move</div>
+  
+    <img src="/graphs/{{images[i]}}" alt="bruh moment">
+  
+
+  </div>
+</div>
+{%endfor%}
+
+<script>dragElement(document.getElementById("myimage"));</script>
   
       
       <div class="centered">
@@ -85,6 +105,10 @@
           <br>
       </div>
       </div>
+
+    
+    </div> <!-- end of page-wrap -->
+    
   </div>
     <!-- Top Nav -->
     <nav class="navbar top-navbar navbar-light bg-light px-5">
@@ -96,10 +120,49 @@
     </h3>
     
 </div>
+
+
+
+
 <script>
-  dragElement(document.getElementById("mydiv"));
+  $(document).ready(function(){
+        
+    $('.lightbox').click(function(){
+        // Get the hash attribute from the clicked link/button
+        var targetLightbox = $(this.hash);
+        var link = $(this);
+        
+        var title = link.data("box-title");
+        var description = link.data("box-description");
+        
+        // Copy title and description into the lightbox
+        targetLightbox.find(".title").text(title);
+        targetLightbox.find(".description").text(description);
+        
+        
+        $('.backdrop').animate({'opacity':'.50'}, 300, 'linear');
+        $('.box').animate({'opacity':'1.00'}, 300, 'linear');
+        $('.backdrop, .box').css('display', 'block');
+    });
+     
+    // Hide the lightbox and backdrop
+    $('.close, .backdrop').click(function(){
+        $('.backdrop, .box').animate({'opacity':'0'}, 300, 'linear', function(){
+            $('.backdrop, .box').css('display', 'none');
+        });
+    });
+
+  });
+</script>
+<script>
+  {% for i in range(images|length) %}
+  dragElement(document.getElementById("out{{i}}"));
+  
+  {%endfor%}
   dragElement(document.getElementById("drag"));
-function dragElement(elmnt) {
+  dragElement(document.getElementById("mydiv"));
+  function dragElement(elmnt) {
+  // thank you w3schools
   var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
   if (document.getElementById(elmnt.id + "header")) {
     // if present, the header is where you move the DIV from:

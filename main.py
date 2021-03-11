@@ -1,4 +1,5 @@
 from fastapi import FastAPI, Request
+from starlette.responses import RedirectResponse
 from endpoints import (hello_world_endpoint,
                        upload_csv_endpoint,
                        login_endpoint,
@@ -27,12 +28,11 @@ def get_config():
 Base.metadata.create_all(engine)
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")
+app.mount("/graphs", StaticFiles(directory="graphs"), name="graphs")
+
 @app.exception_handler(AuthJWTException)
 def authjwt_exception_handler(request:Request, exc: AuthJWTException):
-    return JSONResponse(
-        status_code=exc.status_code,
-        content={"detail":exc.message}
-    )
+    return RedirectResponse('/login')
 app.include_router(hello_world_endpoint.router)
 app.include_router(upload_csv_endpoint.router)
 app.include_router(login_endpoint.router)

@@ -1,0 +1,59 @@
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+</head>
+<div class="page-wrap">
+    <style>
+        .box {
+            display:none;
+        }
+        
+        a.lightbox .jsLightboxContent{
+            display:none;
+        }
+        
+        .backdrop {
+            position:absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+        }
+    </style>
+    <a href="#lbContact" class="lightbox" id="contact" data-box-title="Kom i kontakt" data-box-description="Kontakt oss for mer informasjon">
+        Kom i kontakt
+    </a>
+    <a href="#lbContact" class="lightbox" id="subscribe" data-box-title="Abonner på nyhetsbrev" data-box-description="Motta informasjon rundt lanseringsdato, kampanjer og tilbud.">
+        Meld deg på vår nyhetsbrev
+    </a>
+
+  <div id="lbContact" class="box">
+    <div class="close"><i class="fa fa-times fa-1x"></i></div> <!-- end of close -->
+    <h3 class="title"><!-- --></h3>
+    <p class="description"><!-- --></p>
+    <div class="container">
+      <form id="newsletter-subscription" action="" method="post">
+        <fieldset>
+          <input placeholder="Fornavn" type="text" tabindex="1" required autofocus>
+        </fieldset> <!-- end of fieldset -->
+        <fieldset>
+          <input placeholder="Etternavn" type="text" tabindex="2" required autofocus>
+        </fieldset> <!-- end of fieldset -->
+        <fieldset>
+          <input placeholder="E-postadresse" type="email" tabindex="3" required>
+        </fieldset> <!-- end of fieldset -->
+        <fieldset>
+          <input placeholder="Telefonnummer" type="tel" tabindex="4" required>
+        </fieldset> <!-- end of fieldset -->
+        <fieldset>
+          <input placeholder="Webside http://" type="url" tabindex="5" required>
+        </fieldset> <!-- end of fieldset -->
+        <fieldset>
+          <button name="submit" type="submit" id="contact-submit" data-submit="...Sending">Send inn</button>
+        </fieldset>
+      </form> <!-- end of form -->
+    </div> <!-- end of container -->
+  </div> <!-- end of box-content -->
+
+  <div class="backdrop"></div> <!-- end of backdrop -->
+
+</div> <!-- end of page-wrap -->

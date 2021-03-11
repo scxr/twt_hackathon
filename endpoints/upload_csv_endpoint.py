@@ -7,9 +7,7 @@ import json
 import os
 import random
 from datetime import datetime as dt
-import magic
 router = APIRouter()
-m = magic.Magic(mime=True)
 templates = Jinja2Templates(directory='templates')
 class csv:
     def __init__(self, csv_name, date_uploaded, user_upload_by):
@@ -29,10 +27,6 @@ async def create_upload_file(request: Request, file : UploadFile = File(...)):
     with open(path, 'wb+') as f:
         f.write(file.file.read())
         f.close()
-    
-    file_type = m.from_file(path)
-    if file_type != 'text/plain':
-        return {"error":"This is not a valid csv file."}
 
     json_path = os.getcwd() + '\\db\\user_uploads.json'
     

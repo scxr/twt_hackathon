@@ -13,6 +13,7 @@
   <link href="https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css" rel="stylesheet" />
   <!-- custom css -->
   <link rel="stylesheet" href="{{ url_for('static', path='/style.css') }}">
+  
 </head>
 
 <body>
@@ -40,13 +41,18 @@
         <i class="bx bx-user-check"></i>
         <span class="mx-2"><a href="/logout" style="text-decoration: none;color:white;">Logout</a></span>
       </li>
+      <li href="#" class="nav-link">
+        <i class ="bx bx-user-check"></i>
+        <span class="mx-2"><a href="/add_graph/{{csv_id}}" style="text-decoration: none;color:white;">Add a graph!</a></span>
+    </li>
+    <li href="#" class="nav-link">
+      <i class="bx bxs-dashboard"></i>
+      <span class="mx-2"><a href="/upload_csv" style="text-decoration: none;color:white;">Upload a CSV</a></span>
+    </li>
 
-    </ul>
+  </ul>
     {%endif%}
-    <li href="/add_graph/{{csv_id}}" class="nav-link">
-      <i class ="bx bx-user-check"></i>
-      <span class="mx-2"><a href="/add_graph/{{csv_id}}">tst</a></span>
-  </li>
+
     <span href="#" class="nav-link h4 w-100 mb-5">
       
     </span>
@@ -54,7 +60,9 @@
 
   <!-- Main Wrapper -->
   <div class="p-1 my-container active-cont">
-    
+    <nav class="navbar top-navbar navbar-light bg-light px-5">
+      <a class="btn border-0" id="menu-btn"><i class="bx bx-menu"></i></a>
+    </nav>
         <div class="centered">
           
           <div id="mydiv" class="dt">
@@ -65,6 +73,7 @@
                 <th>Mean</th>
                 <th>Median</th>
                 <th>Mode</th>
+
               </tr>
               {% for i in vals %}
                   <tr>
@@ -72,6 +81,7 @@
                     <th>{{vals[i]["mean"]}}</th>
                     <th>{{vals[i]["median"]}}</th>
                     <th>{{vals[i]["mode"]}}</th>
+
                   </tr>
               {% endfor %}
             </table>
@@ -79,11 +89,12 @@
   </div>
   {% for i in range(images|length) %}
   <div class="center">
-  <div id="out{{i}}" class="dt">
-  <div id="out{{i}}header" class="dth">Move</div>
   
+    <div id="out{{i}}" class="dt">
+  <div id="out{{i}}header" class="dth">Move <a href="/remove_graph/{{images[i]}}">Remove Graph</a> <form method="POST" action="/remove_graph/{{images[i]}}"><button type="submit">Delete</button></form></div>
+    <div class="image">
     <img src="/graphs/{{images[i]}}" alt="bruh moment">
-  
+  </div>
 
   </div>
 </div>
@@ -111,9 +122,7 @@
     
   </div>
     <!-- Top Nav -->
-    <nav class="navbar top-navbar navbar-light bg-light px-5">
-      <a class="btn border-0" id="menu-btn"><i class="bx bx-menu"></i></a>
-    </nav>
+    
     <!--End Top Nav -->
     
     <h3 class="text-dark p-3" style="text-align: center; font-style:italic;position:relative;">View CSV
@@ -157,7 +166,6 @@
 <script>
   {% for i in range(images|length) %}
   dragElement(document.getElementById("out{{i}}"));
-  
   {%endfor%}
   dragElement(document.getElementById("drag"));
   dragElement(document.getElementById("mydiv"));

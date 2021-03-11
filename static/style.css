@@ -271,3 +271,12 @@ a.lightbox .jsLightboxContent{
   height: 100%;
   opacity: 0;
 }
+.image{
+
+
+background-size: contain;
+border: 1px solid lightgray;
+background-repeat: no-repeat;
+
+resize: both;
+overflow: auto; }

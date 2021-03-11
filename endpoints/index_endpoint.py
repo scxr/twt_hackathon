@@ -10,7 +10,11 @@ templates = Jinja2Templates(directory='templates')
 async def index(request: Request, Authorise: AuthJWT = Depends()):
     try:
         auth_cookie = request.cookies["access_token_cookie"]
-        user = f'Logged in as: {decode_auth_token(auth_cookie)}'
+        myuser = decode_auth_token(auth_cookie)
+        if myuser is None:
+            user = "Not logged in"
+        else:
+            user = f'Logged in as: {myuser}'
     except:
         user = "Not logged in"
     print(user)

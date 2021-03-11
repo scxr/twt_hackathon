@@ -22,27 +22,15 @@
       <a href="#" class="nav-link h3 text-white my-2">
         <p>{{user}}</p>
       </a>
-      {% if user=="Not logged in" %}
       <li href="#" class="nav-link">
         <i class="bx bxs-dashboard"></i>
-        <span class="mx-2"><a href="#" style="text-decoration: none;color:white;">Home</a></span>
+        <span class="mx-2"><a href="/" style="text-decoration: none;color:white;">Home</a></span>
       </li>
       <li href="/login" class="nav-link">
         <i class="bx bx-user-check"></i>
         <span class="mx-2"><a href="/login" style="text-decoration: none;color:white;">Login</a></span>
       </li>
-      <li href="#" class="nav-link">
-        <i class="bx bx-user-check"></i>
-        <span class="mx-2"><a href="/register" style="text-decoration: none;color:white;">Register</a></span>
-      </li>
-      {%else%}
-      <li href="#" class="nav-link">
-        <i class="bx bx-user-check"></i>
-        <span class="mx-2"><a href="/logout" style="text-decoration: none;color:white;">Logout</a></span>
-      </li>
-
-    </ul>
-    {%endif%}
+     
     <span href="#" class="nav-link h4 w-100 mb-5">
       
     </span>
@@ -58,11 +46,11 @@
     </form>-->
   <div class="p-1 my-container active-cont">
     <form method='POST' action='' style='text-align: center;'>
-        <input type='text' name='username' placeholder='Username'>
+        <input type='text' name='username' placeholder='Username' required>
         <br><br>
-        <input type='password' name='password' placeholder='Password'>
+        <input type='password' name='password' placeholder='Password' required>
         <br><br>
-        <input type='password' name='password_confirm' placeholder='Confirm Password'>
+        <input type='password' name='password_confirm' placeholder='Confirm Password' required>
         <br><br>
         <input type='submit' value="Register">
     </form>

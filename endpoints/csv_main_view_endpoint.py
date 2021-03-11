@@ -22,6 +22,7 @@ async def reroute_select_csv(request: Request):
 async def view_csv(csv_id:int,request:Request,colo='', colt='',graph_type='',Authorise : AuthJWT = Depends()):
     Authorise.jwt_required()
     user = Authorise.get_jwt_subject()
+    user_to_send = f'Logged in as: {user}'
     path = os.getcwd() + '\\db\\user_uploads.json'
     with open(path) as f:
         users_json = json.load(f)
@@ -33,25 +34,30 @@ async def view_csv(csv_id:int,request:Request,colo='', colt='',graph_type='',Aut
     csv_info = await pandas_np_general_information(df)
     vals = defaultdict(dict)
     for column in df.columns:
+        #print(column)
         column_mean = await pandas_get_column_mean(df, column)
         column_median = await pandas_get_column_median(df, column)
         column_mode = await pandas_get_column_mode(df, column)
+
         if str(column_mean) != "nan":
             vals[column]["mean"] = "%.2f" % column_mean
             vals[column]["median"] = "%.2f" % column_median
             vals[column]["mode"] = column_mode[0]
+
     resp = await parse_request(df, graph_type, colo, colt, csv_id)
     images = []
-    
-    for i in os.listdir(f'graphs\\{csv_id}'):
-        images.append(str(csv_id)+'\\'+i)
-    print(images)
+    try:
+        for i in os.listdir(f'graphs\\{csv_id}'):
+            images.append(str(csv_id)+'\\'+i)
+    except:
+        images = []
     return templates.TemplateResponse('csv_main.html', {"request":request, 
                                                         "csv_cols":csv_cols, 
                                                         "general":csv_info, 
                                                         "vals":dict(vals),
                                                         "csv_id":csv_id,
-                                                        "images":images})
+                                                        "images":images,
+                                                        "user":user_to_send})
 
 @router.post('/add_graph/{csv_id}')
 async def add_graph_post(csv_id:int, graphtype=Form(...), col1=Form(...), col2=Form(...)):
@@ -63,3 +69,11 @@ async def add_graph(request: Request, csv_id:int):
     df = pd.read_csv(csv_path)
     plottable_columns = await pandas_get_possible_numerics(df)
     return templates.TemplateResponse('add_graph.html', {"request":request, "columns":plottable_columns})
+
+
+
+@router.get('/remove_graph/{csv_id}/{fp}')
+async def remove_graph(csv_id:int, fp:str):
+    os.remove(f'graphs/{csv_id}/{fp}')
+    print(fp, csv_id)
+    return RedirectResponse(f'/view_csv/{csv_id}', status_code=303)

@@ -7,7 +7,7 @@ from db.functions import get_db
 from models.database_models import User
 import json
 import os
-
+from shutil import rmtree
 router = APIRouter()
 templates = Jinja2Templates(directory='templates')
 
@@ -24,13 +24,13 @@ async def view_my_csvs(request: Request, Authorise: AuthJWT = Depends(), db = De
     users_csvs = [csv for csv in csv_json[user]]
     
             
-    users_csvs = [csv for csv in csv_json[user]]
+    #users_csvs = [csv for csv in csv_json[user]]
 
     #print([csv for csv in csv_json[user]])   
     print(users_csvs)
     return templates.TemplateResponse("view_csvs.html", {"request":request, "csvs":users_csvs, "user":f"Logged in as: {user}"})
 
-@router.post('/delete_csv/{csv_id}')
+@router.get('/delete_csv/{csv_id}')
 async def delete_csv(csv_id:int, request: Request):
     user_cookie = request.cookies.get("access_token_cookie")
     if user_cookie == None:
@@ -52,4 +52,9 @@ async def delete_csv(csv_id:int, request: Request):
     with open(json_path, 'w') as f:
         json.dump(users_json, f)
     #json.dump()
-    return 'done'
+    try:
+        
+        rmtree(f'graphs/{csv_id}')
+    except Exception as e:
+        print('No graphs', e)
+    return RedirectResponse('/my_csvs')

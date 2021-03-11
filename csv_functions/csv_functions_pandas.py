@@ -26,18 +26,28 @@ async def pandas_get_column_median(df:pd.DataFrame, column:str) -> float:
 async def pandas_get_column_mode(df:pd.DataFrame, column:str) -> float:
     clean_df = await pandas_clean_df_col(df, column)
     return clean_df[column].mode()
-
+'''
 async def pandas_get_max(df:pd.DataFrame, column:str) -> int:
+    # There is currently something wrong with this, taking out of release :/
     clean_df = await pandas_clean_df_col(df, column)
+    
     max_pos = clean_df[column].argmax()
-    max_val = clean_df[column].loc(max_pos)
-    return max_pos, max_val
+    try:
+        max_val = clean_df[column][max_pos]
+    except:
+        max_val = "NaN"
+    return max_val
 
 async def pandas_get_min(df:pd.DataFrame, column:str) -> int:
+    # There is currently something wrong with this, taking out of release :/
     clean_df = await pandas_clean_df_col(df, column)
     min_pos = clean_df[column].argmin()
-    min_val = clean_df[column].loc(min_pos)
-    return min_pos, min_val
+    try:
+        min_val = clean_df[column][min_pos]
+    except:
+        min_val = "NaN"
+    return min_val
+'''
 
 async def pandas_np_general_information(df:pd.DataFrame) -> list:
     row_count, column_count = df.shape[0], df.shape[1]
@@ -51,7 +61,6 @@ async def pandas_np_general_information(df:pd.DataFrame) -> list:
         "duped": duplicates
     }
     return ret_dict
-
 async def pandas_get_possible_numerics(df: pd.DataFrame) -> list:
     possibles = []
     for col in df.columns:
@@ -62,4 +71,3 @@ async def pandas_get_possible_numerics(df: pd.DataFrame) -> list:
         #print(cleaned[col].mean())
     return possibles
 
-#print(os.getcwd())

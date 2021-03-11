@@ -16,7 +16,7 @@ class csv:
         self.csv_name =csv_name
         self.date_uploaded = date_uploaded
         self.user_upload_by = user_upload_by
-@router.post('/upload_file')
+@router.post('/upload_csv')
 async def create_upload_file(request: Request, file : UploadFile = File(...)):
     file_id = random.randint(111111,999999)
     auth_cookie = request.cookies["access_token_cookie"]
@@ -51,10 +51,10 @@ async def create_upload_file(request: Request, file : UploadFile = File(...)):
     with open(json_path, 'w') as fp:
         print(type(current_data))
         json.dump(current_data, fp)
-    return 'to do'
+    return RedirectResponse('/my_csvs', status_code=303)
 
 
-@router.get('/upload_file')
+@router.get('/upload_csv')
 async def get_upload_file(request: Request, Authorise: AuthJWT = Depends()):
     Authorise.jwt_required()
     user = Authorise.get_jwt_subject()

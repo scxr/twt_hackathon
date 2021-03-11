@@ -40,7 +40,14 @@
             <i class="bx bx-user-check"></i>
             <span class="mx-2"><a href="/logout" style="text-decoration: none;color:white;">Logout</a></span>
           </li>
-          
+          <li href="#" class="nav-link">
+            <i class="bx bxs-dashboard"></i>
+            <span class="mx-2"><a href="/" style="text-decoration: none;color:white;">Home</a></span>
+          </li>
+          <li href="#" class="nav-link">
+            <i class="bx bxs-dashboard"></i>
+            <span class="mx-2"><a href="/upload_csv" style="text-decoration: none;color:white;">Upload CSV</a></span>
+          </li>
         </ul>
         {%endif%}
        
@@ -85,9 +92,9 @@
                 {% if csvs[i]["file"]|length > 25%}
                     <h4><a href="/view_csv/{{csvs[i]['file_id']}}">{{csvs[i]["file"][0:25]}}...csv</a></h4><span class="icon"></span>
                 {%else%}
-                    <h4>{{csvs[i]["file"]}}</h4><span class="icon"></span>
+                    <h4><a href="/view_csv/{{csvs[i]['file_id']}}">{{csvs[i]["file"]}}</a></h4><span class="icon"></span>
                 {%endif%}
-                <button value="{{csvs[i]['file_id']}}" formmethod="POST" formaction="/delete_csv/{{csvs[i]['file_id']}}">Delete</button>
+                <a href="/delete_csv/{{csvs[i]['file_id']}}">Delete</a>
             </div>
             <div class="Accordion__tab__content">
               <div class="wrapper">
